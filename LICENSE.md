@@ -23,7 +23,7 @@ Copyright (c) 2026 Hobby Ino. All rights reserved.
 
 ---
 
-## ✉️ 상업 이용 문의 (Inquiries)
+## ✉️ Commercial Inquiries
 
-상업적 목적의 사용 허가 및 제휴 제안은 아래 채널로 연락해 주시기 바랍니다.
+For commercial licensing requests and partnership proposals, please contact us at:
 * **Email:** dev@hobbyino.com
