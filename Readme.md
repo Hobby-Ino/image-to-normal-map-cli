@@ -9,6 +9,10 @@ cli/
   macos/image-to-normal-map
   linux/image-to-normal-map
   windows/image-to-normal-map.exe
+sample/
+  sample.png
+  sample-alpha.png
+  sample-normal.png
 LICENSE.md
 SUPPORT.md
 THIRD_PARTY_NOTICES.md
@@ -16,6 +20,55 @@ Readme.md
 ```
 
 Run the following commands from this directory. Replace input paths with your own images.
+
+## Sample Usage
+
+The supplied images illustrate a sprite and its alpha and normal maps:
+
+| Original sprite | Alpha map | Normal map |
+|:---:|:---:|:---:|
+| ![Original sprite](sample/sample.png) | ![Grayscale alpha map](sample/sample-alpha.png) | ![Tangent-space normal map](sample/sample-normal.png) |
+| `sample/sample.png` (512 x 512) | `sample/sample-alpha.png` (64 x 64) | `sample/sample-normal.png` (64 x 64) |
+
+- **Original:** color texture used for the sprite.
+- **Alpha:** white means opaque, black means transparent, and gray means partially transparent.
+- **Normal:** RGB encodes surface direction for lighting calculations in a game engine or shader; it is not a color texture.
+
+These are supplied preview assets, not a verified exact-output comparison. The original is 512 x 512 while both maps are 64 x 64. For actual rendering, use matching dimensions and aligned UV coordinates. The CLI preserves the input dimensions, so converting this original creates 512 x 512 maps. The commands below demonstrate usage; they do not claim to reproduce the supplied 64 x 64 maps exactly.
+
+### Generate Maps from the Sample
+
+These commands use different output names to preserve the supplied preview files. Existing `generated-*` outputs will be overwritten on subsequent runs. Transparent pixels are automatically excluded; no color-exclusion option is needed.
+
+**macOS:**
+
+```bash
+./cli/macos/image-to-normal-map sample/sample.png \
+  --strength 2.0 --blur-radius 1.0 --normal-z 0.75 \
+  --alpha-map \
+  --output sample/generated-normal.png \
+  --alpha-output sample/generated-alpha.png -v
+```
+
+**Linux:**
+
+```bash
+./cli/linux/image-to-normal-map sample/sample.png \
+  --strength 2.0 --blur-radius 1.0 --normal-z 0.75 \
+  --alpha-map \
+  --output sample/generated-normal.png \
+  --alpha-output sample/generated-alpha.png -v
+```
+
+**Windows PowerShell:**
+
+```powershell
+.\cli\windows\image-to-normal-map.exe sample/sample.png --strength 2.0 --blur-radius 1.0 --normal-z 0.75 --alpha-map --output sample/generated-normal.png --alpha-output sample/generated-alpha.png -v
+```
+
+Use the original as the color texture, the generated alpha map as an opacity mask, and the generated normal map as a tangent-space normal texture. Configure the normal texture as non-color/linear data in your renderer. Use `--invert-y` if the renderer requires the opposite Y convention.
+
+This usage example does not grant commercial rights. See [LICENSE.md](LICENSE.md) and contact **dev@hobbyino.com** for commercial licensing.
 
 ## macOS
 
